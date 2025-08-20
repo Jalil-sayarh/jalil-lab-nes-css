@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jalil's Lab - Character Select</title>
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background Characters -->
+    <div class="animated-background" id="animatedBackground">
+        <!-- Pokemon Characters -->
+        <i class="nes-bulbasaur is-small bounce-character" data-speed="1.2"></i>
+        <i class="nes-charmander is-small bounce-character" data-speed="0.8"></i>
+        <i class="nes-squirtle is-small bounce-character" data-speed="1.5"></i>
+        <i class="nes-pokeball is-small bounce-character" data-speed="1.0"></i>
+        
+        <!-- Nintendo Characters -->
+        <i class="nes-mario is-small bounce-character" data-speed="1.3"></i>
+        <i class="nes-kirby is-small bounce-character" data-speed="0.9"></i>
+        <i class="nes-ash is-small bounce-character" data-speed="1.1"></i>
+        
+        <!-- Icons -->
+        <i class="nes-icon coin is-small bounce-character" data-speed="1.6"></i>
+        <i class="nes-icon trophy is-small bounce-character" data-speed="0.7"></i>
+        <i class="nes-logo is-small bounce-character" data-speed="1.4"></i>
+        <i class="snes-logo is-small bounce-character" data-speed="0.6"></i>
+        
+        <!-- Tech Icons -->
+        <i class="nes-smartphone is-small bounce-character" data-speed="1.7"></i>
+        <i class="nes-octocat animate is-small bounce-character" data-speed="1.0"></i>
+    </div>
+
+    <div class="container">
+        <!-- Title Screen -->
+        <div class="title-section">
+            <h1 class="nes-text is-primary">JALIL'S LAB</h1>
+            <p class="nes-text subtitle">~ CHARACTER SELECT ~</p>
+        </div>
+
+        <!-- Character Selection -->
+        <div class="character-select">
+            <!-- Badr Character Card -->
+            <div class="character-card" id="badr-card">
+                <div class="nes-container with-title is-centered">
+                    <p class="title">BADR</p>
+                    <div class="character-avatar">
+                        <div class="nes-avatar badr-avatar">
+                            <div class="badr-character-sprite"></div>
+                        </div>
+                    </div>
+                    <div class="character-info">
+                        <p class="character-title">Creative Designer</p>
+                        <div class="stats">
+                            <div class="stat-row">
+                                <span class="stat-name">Creativity:</span>
+                                <progress class="nes-progress is-success" value="95" max="100"></progress>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-name">Humor:</span>
+                                <progress class="nes-progress is-warning" value="80" max="100"></progress>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-name">Design:</span>
+                                <progress class="nes-progress is-primary" value="90" max="100"></progress>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-name">Bad Jokes:</span>
+                                <progress class="nes-progress is-error" value="100" max="100"></progress>
+                            </div>
+                        </div>
+                        <div class="character-abilities">
+                            <p class="nes-text abilities-title">Special Abilities:</p>
+                            <ul class="abilities-list">
+                                <li>• Website Wizardry</li>
+                                <li>• Joke Immunity</li>
+                                <li>• Color Harmony</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="nes-btn is-primary select-btn" onclick="selectCharacter('badr')">SELECT</button>
+                </div>
+            </div>
+
+            <!-- VS Text -->
+            <div class="vs-section">
+                <div class="nes-container is-dark is-centered vs-container">
+                    <p class="nes-text is-error vs-text">VS</p>
+                </div>
+            </div>
+
+            <!-- Jalil Character Card -->
+            <div class="character-card" id="jalil-card">
+                <div class="nes-container with-title is-centered">
+                    <p class="title">JALIL</p>
+                    <div class="character-avatar">
+                        <div class="nes-avatar jalil-avatar">
+                            <div class="jalil-character-sprite"></div>
+                        </div>
+                    </div>
+                    <div class="character-info">
+                        <p class="character-title">Problem Solver</p>
+                        <div class="stats">
+                            <div class="stat-row">
+                                <span class="stat-name">Technical:</span>
+                                <progress class="nes-progress is-success" value="98" max="100"></progress>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-name">Generosity:</span>
+                                <progress class="nes-progress is-primary" value="100" max="100"></progress>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-name">Randomness:</span>
+                                <progress class="nes-progress is-warning" value="95" max="100"></progress>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-name">Logic:</span>
+                                <progress class="nes-progress is-success" value="92" max="100"></progress>
+                            </div>
+                        </div>
+                        <div class="character-abilities">
+                            <p class="nes-text abilities-title">Special Abilities:</p>
+                            <ul class="abilities-list">
+                                <li>• Debug Master</li>
+                                <li>• Random Burst</li>
+                                <li>• Help Everyone</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="nes-btn is-success select-btn" onclick="selectCharacter('jalil')">SELECT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selected Character Display -->
+        <div class="selected-character" id="selected-display" style="display: none;">
+            <div class="nes-container is-rounded">
+                <h2 class="nes-text is-primary">Character Selected!</h2>
+                <p id="selected-name" class="nes-text"></p>
+                <p id="selected-quote" class="character-quote"></p>
+                <button class="nes-btn" onclick="resetSelection()">Choose Again</button>
+                <button class="nes-btn is-success" onclick="startGame()">Start Adventure!</button>
+            </div>
+        </div>
+
+        <!-- Music Control -->
+        <div class="music-control">
+            <button class="nes-btn is-warning" id="musicToggle" onclick="backgroundMusic.toggle()">
+                🎵 Music: ON
+            </button>
+            <p class="nes-text is-disabled music-hint">Press 'M' to toggle music</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="nes-text is-disabled">Press START to continue your adventure!</p>
+        </div>
+    </div>
+
+    <!-- Pokemon-style Dialog Box -->
+    <div class="dialog-overlay" id="dialogOverlay">
+        <div class="dialog-box">
+            <div class="nes-container is-rounded dialog-container">
+                <div class="dialog-content">
+                    <div class="dialog-avatar">
+                        <div class="nes-avatar">
+                            <span class="dialog-emoji">🎮</span>
+                        </div>
+                    </div>
+                    <div class="dialog-text-area">
+                        <p class="dialog-speaker">Jalil's Lab</p>
+                        <p class="dialog-text" id="dialogText"></p>
+                        <div class="dialog-continue" id="dialogContinue">
+                            <button class="nes-btn is-primary dialog-continue-btn">▼</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
