@@ -81,90 +81,97 @@ const sounds = new SoundEffects();
 // Background Music System
 class BackgroundMusic {
     constructor() {
-        this.audioContext = null;
+        this.tracks = [
+            'assets/track-1.mp3',
+            'assets/track-2.mp3',
+            'assets/track-3.mp3',
+            'assets/track-4.mp3',
+            'assets/track-5.mp3',
+            'assets/track-6.mp3'
+        ];
+        this.currentAudio = null;
         this.isPlaying = false;
-        this.currentOscillators = [];
-        this.masterGain = null;
-        this.init();
+        this.currentTrackIndex = 0;
+        this.volume = 0.3; // Background music volume
     }
 
-    init() {
-        try {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            this.masterGain = this.audioContext.createGain();
-            this.masterGain.connect(this.audioContext.destination);
-            this.masterGain.gain.value = 0.1; // Low volume for background
-        } catch (e) {
-            console.log("Background music not supported");
-        }
-    }
-
-    // Simple melody inspired by Pokemon-style slice of life music
+    // Play current track on loop
     async playBackgroundMusic() {
-        if (!this.audioContext || this.isPlaying) return;
+        // Don't restart if already playing the same track
+        if (this.isPlaying && this.currentAudio && !this.currentAudio.paused) {
+            return;
+        }
+        
+        // Stop any existing audio first
+        this.stop();
         
         this.isPlaying = true;
         
-        // Simple pentatonic melody pattern (relaxing and nostalgic)
-        const melody = [
-            { note: 261.63, duration: 1000 }, // C4
-            { note: 293.66, duration: 500 },  // D4
-            { note: 329.63, duration: 500 },  // E4
-            { note: 392.00, duration: 1000 }, // G4
-            { note: 440.00, duration: 500 },  // A4
-            { note: 392.00, duration: 500 },  // G4
-            { note: 329.63, duration: 1000 }, // E4
-            { note: 293.66, duration: 1000 }, // D4
-            { note: 261.63, duration: 2000 }, // C4
-        ];
-
-        const playNote = (frequency, duration, startTime) => {
-            const oscillator = this.audioContext.createOscillator();
-            const noteGain = this.audioContext.createGain();
-            
-            oscillator.connect(noteGain);
-            noteGain.connect(this.masterGain);
-            
-            oscillator.frequency.value = frequency;
-            oscillator.type = 'square'; // Retro 8-bit sound
-            
-            // Envelope for softer attack/release
-            noteGain.gain.setValueAtTime(0, startTime);
-            noteGain.gain.linearRampToValueAtTime(0.3, startTime + 0.1);
-            noteGain.gain.linearRampToValueAtTime(0.2, startTime + duration * 0.001 - 0.1);
-            noteGain.gain.linearRampToValueAtTime(0, startTime + duration * 0.001);
-            
-            oscillator.start(startTime);
-            oscillator.stop(startTime + duration * 0.001);
-            
-            return oscillator;
-        };
-
-        const playMelody = () => {
-            if (!this.isPlaying) return;
-            
-            let currentTime = this.audioContext.currentTime;
-            
-            melody.forEach(({ note, duration }) => {
-                playNote(note, duration, currentTime);
-                currentTime += duration * 0.001;
-            });
-            
-            // Loop the melody
-            setTimeout(() => {
-                if (this.isPlaying) playMelody();
-            }, melody.reduce((sum, { duration }) => sum + duration, 0) + 2000);
-        };
-
-        playMelody();
+        // Create new audio element
+        this.currentAudio = new Audio(this.tracks[this.currentTrackIndex]);
+        this.currentAudio.volume = this.volume;
+        this.currentAudio.loop = true;
+        
+        // Handle loading errors gracefully
+        this.currentAudio.addEventListener('error', (e) => {
+            console.log(`Error loading track: ${this.tracks[this.currentTrackIndex]}`);
+            this.isPlaying = false;
+            this.updateUI();
+        });
+        
+        // Handle successful load and play
+        this.currentAudio.addEventListener('loadeddata', () => {
+            this.updateUI();
+        });
+        
+        // Play the track
+        try {
+            await this.currentAudio.play();
+            this.updateUI();
+        } catch (e) {
+            console.log("Could not play background music:", e);
+            this.isPlaying = false;
+            this.updateUI();
+        }
     }
 
     stop() {
         this.isPlaying = false;
-        this.currentOscillators.forEach(osc => {
-            try { osc.stop(); } catch (e) { /* ignore */ }
-        });
-        this.currentOscillators = [];
+        if (this.currentAudio) {
+            this.currentAudio.pause();
+            this.currentAudio.currentTime = 0;
+            this.currentAudio = null;
+        }
+        this.updateUI();
+    }
+
+    // Shuffle to a random track
+    shuffleTrack() {
+        // Get random track different from current one
+        let newIndex;
+        do {
+            newIndex = Math.floor(Math.random() * this.tracks.length);
+        } while (newIndex === this.currentTrackIndex && this.tracks.length > 1);
+        
+        this.currentTrackIndex = newIndex;
+        
+        // If music is currently playing, immediately switch to the new track
+        if (this.isPlaying) {
+            // Force stop current track
+            if (this.currentAudio) {
+                this.currentAudio.pause();
+                this.currentAudio.currentTime = 0;
+                this.currentAudio = null;
+            }
+            // Start playing the new track immediately
+            this.playBackgroundMusic();
+        } else {
+            // Just update UI if not playing
+            this.updateUI();
+        }
+        
+        // Play shuffle sound effect
+        sounds.playBeep(800, 150, 'sine');
     }
 
     toggle() {
@@ -173,11 +180,20 @@ class BackgroundMusic {
         } else {
             this.playBackgroundMusic();
         }
-        
-        // Update button text
+        // Note: updateUI() is called within stop() and playBackgroundMusic()
+    }
+    
+    updateUI() {
+        // Update music toggle button
         const button = document.getElementById('musicToggle');
         if (button) {
             button.textContent = this.isPlaying ? '🎵 Music: ON' : '🔇 Music: OFF';
+        }
+        
+        // Update shuffle button to show current track
+        const shuffleButton = document.getElementById('shuffleButton');
+        if (shuffleButton) {
+            shuffleButton.textContent = `🔀 Track ${this.currentTrackIndex + 1}`;
         }
     }
 }
@@ -597,10 +613,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the dialog system
     dialogSystem = new DialogSystem();
     
-    // Start background music after a short delay
-    setTimeout(() => {
-        backgroundMusic.playBackgroundMusic();
-    }, 2000);
+    // Initialize UI to show correct state
+    backgroundMusic.updateUI();
     // Add hover sounds to buttons
     const buttons = document.querySelectorAll('.nes-btn');
     buttons.forEach(button => {

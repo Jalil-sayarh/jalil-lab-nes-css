@@ -36,7 +36,7 @@
     <div class="container">
         <!-- Title Screen -->
         <div class="title-section">
-            <h1 class="nes-text is-primary">JALIL'S LAB</h1>
+            <h1 class="nes-text is-primary"><a href="/">JALIL'S LAB</a></h1>
             <p class="nes-text subtitle">~ CHARACTER SELECT ~</p>
         </div>
 
@@ -59,12 +59,12 @@
                                 <progress class="nes-progress is-success" value="95" max="100"></progress>
                             </div>
                             <div class="stat-row">
-                                <span class="stat-name">Humor:</span>
-                                <progress class="nes-progress is-warning" value="80" max="100"></progress>
+                                <span class="stat-name">Design:</span>
+                                <progress class="nes-progress is-warning" value="95" max="100"></progress>
                             </div>
                             <div class="stat-row">
-                                <span class="stat-name">Design:</span>
-                                <progress class="nes-progress is-primary" value="90" max="100"></progress>
+                                <span class="stat-name">Logic:</span>
+                                <progress class="nes-progress is-primary" value="65" max="100"></progress>
                             </div>
                             <div class="stat-row">
                                 <span class="stat-name">Bad Jokes:</span>
@@ -104,28 +104,28 @@
                         <p class="character-title">Problem Solver</p>
                         <div class="stats">
                             <div class="stat-row">
-                                <span class="stat-name">Technical:</span>
-                                <progress class="nes-progress is-success" value="98" max="100"></progress>
+                                <span class="stat-name">Creativity:</span>
+                                <progress class="nes-progress is-success" value="85" max="100"></progress>
                             </div>
                             <div class="stat-row">
-                                <span class="stat-name">Generosity:</span>
-                                <progress class="nes-progress is-primary" value="100" max="100"></progress>
-                            </div>
-                            <div class="stat-row">
-                                <span class="stat-name">Randomness:</span>
-                                <progress class="nes-progress is-warning" value="95" max="100"></progress>
+                                <span class="stat-name">Design:</span>
+                                <progress class="nes-progress is-warning" value="80" max="100"></progress>
                             </div>
                             <div class="stat-row">
                                 <span class="stat-name">Logic:</span>
-                                <progress class="nes-progress is-success" value="92" max="100"></progress>
+                                <progress class="nes-progress is-primary" value="100" max="100"></progress>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-name">Foodie:</span>
+                                <progress class="nes-progress is-error" value="100" max="100"></progress>
                             </div>
                         </div>
                         <div class="character-abilities">
                             <p class="nes-text abilities-title">Special Abilities:</p>
                             <ul class="abilities-list">
                                 <li>• Debug Master</li>
-                                <li>• Random Burst</li>
-                                <li>• Help Everyone</li>
+                                <li>• Optimistic Burst</li>
+                                <li>• Eat Everything</li>
                             </ul>
                         </div>
                     </div>
@@ -147,10 +147,15 @@
 
         <!-- Music Control -->
         <div class="music-control">
-            <button class="nes-btn is-warning" id="musicToggle" onclick="backgroundMusic.toggle()">
-                🎵 Music: ON
-            </button>
-            <p class="nes-text is-disabled music-hint">Press 'M' to toggle music</p>
+            <div class="music-buttons">
+                <button class="nes-btn is-warning" id="musicToggle" onclick="backgroundMusic.toggle()">
+                    🔇 Music: OFF
+                </button>
+                <button class="nes-btn is-primary" id="shuffleButton" onclick="backgroundMusic.shuffleTrack()">
+                    🔀 Track 1
+                </button>
+            </div>
+            <p class="nes-text is-disabled music-hint">Discover the music of Jalil's Lab</p>
         </div>
 
         <!-- Footer -->
