@@ -686,6 +686,18 @@ body {
     margin: 15px 0;
 }
 
+/* When only 3 buttons (no GitHub for Badr), make them flow nicely */
+.contact-buttons:has(.contact-btn:nth-child(3):last-child) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "btn1 btn2"
+        "btn3 btn3";
+}
+
+.contact-buttons:has(.contact-btn:nth-child(3):last-child) .contact-btn:nth-child(3) {
+    grid-area: btn3;
+}
+
 .contact-btn {
     font-size: 0.6rem !important;
     padding: 8px !important;

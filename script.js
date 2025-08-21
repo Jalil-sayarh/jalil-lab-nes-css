@@ -1,4 +1,27 @@
 // Character data with personalities and quotes
+// Global variable to track selected character
+let selectedCharacterId = null;
+
+// Contact information for each character
+const contactInfo = {
+    jalil: {
+        name: "Jalil",
+        whatsapp: "+33611126846",
+        linkedin: "https://www.linkedin.com/in/jalil-the-marketer/",
+        email: "sayarhjalil@gmail.com",
+        github: "https://github.com/jalil-sayarh",
+        showGithub: true
+    },
+    badr: {
+        name: "Badr",
+        whatsapp: "+33749485920",
+        linkedin: "https://www.linkedin.com/in/badr-the-brand-designer/",
+        email: "badr.bouhsain@gmail.com",
+        github: null,
+        showGithub: false
+    }
+};
+
 const characters = {
     badr: {
         name: "BADR",
@@ -518,6 +541,7 @@ class DialogSystem {
 
 // Character selection functionality
 function selectCharacter(characterId) {
+    selectedCharacterId = characterId; // Store the selected character
     const character = characters[characterId];
     const selectedDisplay = document.getElementById('selected-display');
     const selectedName = document.getElementById('selected-name');
@@ -570,6 +594,10 @@ function startGame() {
 }
 
 function showContactModal() {
+    // Get the current character's contact info
+    const contact = contactInfo[selectedCharacterId];
+    const characterName = contact.name;
+    
     // Create contact selection modal
     const modal = document.createElement('div');
     modal.className = 'contact-modal';
@@ -579,7 +607,7 @@ function showContactModal() {
                 <p class="title">🎮 Adventure Starting!</p>
                 <div class="contact-intro">
                     <p class="nes-text" style="font-size: 0.7rem; margin-bottom: 15px;">
-                        Your character is ready for epic coding adventures!<br>
+                        You selected ${characterName}! Ready for epic ${selectedCharacterId === 'jalil' ? 'coding' : 'design'} adventures!<br>
                         Let's connect and start building something amazing together! 🚀
                     </p>
                 </div>
@@ -600,9 +628,11 @@ function showContactModal() {
                             <i class="nes-icon trophy"></i> Email
                         </button>
                         
+                        ${contact.showGithub ? `
                         <button class="nes-btn is-error contact-btn" onclick="openGitHub()">
                             <i class="nes-icon coin"></i> GitHub
                         </button>
+                        ` : ''}
                     </div>
                 </div>
                 
@@ -624,41 +654,47 @@ function showContactModal() {
 }
 
 function openWhatsApp() {
-    //sounds.playClick();
-    const message = encodeURIComponent("Hi Jalil! 👋 I just played your character selection game and I'm interested in connecting. Let's chat about coding adventures! 🎮");
-    const phoneNumber = "+33611126846"; // Replace with your actual WhatsApp number
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    const contact = contactInfo[selectedCharacterId];
+    const characterName = contact.name;
+    const profession = selectedCharacterId === 'jalil' ? 'coding' : 'design';
+    
+    const message = encodeURIComponent(`Hi ${characterName}! 👋 I just played your character selection game and chose you as my adventure companion! I'm interested in connecting and discussing ${profession} projects. Let's chat! 🎮`);
+    
+    window.open(`https://wa.me/${contact.whatsapp}?text=${message}`, '_blank');
     closeContactModal();
 }
 
 function openLinkedIn() {
-    //sounds.playClick();
-    // Replace with your actual LinkedIn profile URL
-    window.open('https://linkedin.com/in/jalil-the-marketer', '_blank');
+    const contact = contactInfo[selectedCharacterId];
+    window.open(contact.linkedin, '_blank');
     closeContactModal();
 }
 
 function openEmail() {
-    //sounds.playClick();
-    const subject = encodeURIComponent("Let's Connect! 🎮");
-    const body = encodeURIComponent(`Hi Jalil!
+    const contact = contactInfo[selectedCharacterId];
+    const characterName = contact.name;
+    const profession = selectedCharacterId === 'jalil' ? 'development' : 'design';
+    
+    const subject = encodeURIComponent(`Let's Connect! 🎮 - From the Character Selection Game`);
+    const body = encodeURIComponent(`Hi ${characterName}!
 
-I just experienced your awesome character selection game and I'm impressed! 
+I just experienced your awesome character selection game and chose you as my adventure companion! 
 
-I'd love to connect and discuss potential collaborations or just chat about coding and development.
+I'd love to connect and discuss potential collaborations in ${profession} or just chat about creative projects.
 
 Looking forward to hearing from you!
 
 Best regards`);
     
-    window.open(`mailto:sayarhjalil@gmail.com?subject=${subject}&body=${body}`, '_blank');
+    window.open(`mailto:${contact.email}?subject=${subject}&body=${body}`, '_blank');
     closeContactModal();
 }
 
 function openGitHub() {
-    //sounds.playClick();
-    // Replace with your actual GitHub profile URL
-    window.open('https://github.com/jalil-sayarh', '_blank');
+    const contact = contactInfo[selectedCharacterId];
+    if (contact.github) {
+        window.open(contact.github, '_blank');
+    }
     closeContactModal();
 }
 
