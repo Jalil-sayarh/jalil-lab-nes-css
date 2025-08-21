@@ -392,16 +392,26 @@ body {
     51%, 100% { opacity: 0.3; }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .character-select {
         flex-direction: column;
         align-items: center;
     }
     
+    /* Badr card comes first */
+    #badr-card {
+        order: 1;
+    }
+    
+    /* VS section comes in the middle */
     .vs-section {
-        order: 3;
+        order: 2;
         margin: 20px 0;
+    }
+    
+    /* Jalil card comes last */
+    #jalil-card {
+        order: 3;
     }
     
     .character-card {
