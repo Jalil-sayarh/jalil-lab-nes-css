@@ -564,9 +564,112 @@ function startGame() {
     body.style.animation = 'fadeOut 2s ease-in-out';
     
     setTimeout(() => {
-        alert('Adventure starting... 🎮\n\nWelcome to Jalil\'s Lab!\nYour character is ready for epic coding adventures!');
+        showContactModal();
         body.style.animation = 'fadeIn 1s ease-in-out';
     }, 1000);
+}
+
+function showContactModal() {
+    // Create contact selection modal
+    const modal = document.createElement('div');
+    modal.className = 'contact-modal';
+    modal.innerHTML = `
+        <div class="contact-modal-content">
+            <div class="nes-container with-title is-centered">
+                <p class="title">🎮 Adventure Starting!</p>
+                <div class="contact-intro">
+                    <p class="nes-text" style="font-size: 0.7rem; margin-bottom: 15px;">
+                        Your character is ready for epic coding adventures!<br>
+                        Let's connect and start building something amazing together! 🚀
+                    </p>
+                </div>
+                
+                <div class="contact-options">
+                    <h3 class="nes-text is-primary" style="font-size: 0.6rem; margin-bottom: 10px;">Choose Your Communication Style:</h3>
+                    
+                    <div class="contact-buttons">
+                        <button class="nes-btn is-success contact-btn" onclick="openWhatsApp()">
+                            <i class="nes-icon heart"></i> WhatsApp
+                        </button>
+                        
+                        <button class="nes-btn is-primary contact-btn" onclick="openLinkedIn()">
+                            <i class="nes-icon star"></i> LinkedIn
+                        </button>
+                        
+                        <button class="nes-btn is-warning contact-btn" onclick="openEmail()">
+                            <i class="nes-icon trophy"></i> Email
+                        </button>
+                        
+                        <button class="nes-btn is-error contact-btn" onclick="openGitHub()">
+                            <i class="nes-icon coin"></i> GitHub
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="nes-btn is-disabled close-btn" onclick="closeContactModal()" style="margin-top: 15px; font-size: 0.5rem;">
+                        Maybe Later
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Add some entrance animation
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 100);
+}
+
+function openWhatsApp() {
+    //sounds.playClick();
+    const message = encodeURIComponent("Hi Jalil! 👋 I just played your character selection game and I'm interested in connecting. Let's chat about coding adventures! 🎮");
+    const phoneNumber = "+33611126846"; // Replace with your actual WhatsApp number
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+    closeContactModal();
+}
+
+function openLinkedIn() {
+    //sounds.playClick();
+    // Replace with your actual LinkedIn profile URL
+    window.open('https://linkedin.com/in/jalil-the-marketer', '_blank');
+    closeContactModal();
+}
+
+function openEmail() {
+    //sounds.playClick();
+    const subject = encodeURIComponent("Let's Connect! 🎮");
+    const body = encodeURIComponent(`Hi Jalil!
+
+I just experienced your awesome character selection game and I'm impressed! 
+
+I'd love to connect and discuss potential collaborations or just chat about coding and development.
+
+Looking forward to hearing from you!
+
+Best regards`);
+    
+    window.open(`mailto:sayarhjalil@gmail.com?subject=${subject}&body=${body}`, '_blank');
+    closeContactModal();
+}
+
+function openGitHub() {
+    //sounds.playClick();
+    // Replace with your actual GitHub profile URL
+    window.open('https://github.com/jalil-sayarh', '_blank');
+    closeContactModal();
+}
+
+function closeContactModal() {
+    const modal = document.querySelector('.contact-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
 }
 
 // Confetti effect for character selection

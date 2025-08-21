@@ -630,3 +630,85 @@ body {
         font-size: 0.6rem;
     }
 }
+
+/* Contact Modal Styles */
+.contact-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.contact-modal.show {
+    opacity: 1;
+}
+
+.contact-modal-content {
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.contact-intro {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-options {
+    text-align: center;
+}
+
+.contact-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.contact-btn {
+    font-size: 0.6rem !important;
+    padding: 8px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.modal-footer {
+    text-align: center;
+    border-top: 2px solid #000;
+    padding-top: 15px;
+    margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .contact-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-modal-content {
+        width: 95%;
+    }
+}
