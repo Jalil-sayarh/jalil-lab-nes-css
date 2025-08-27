@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jalil's Lab - Character Select</title>
+    <base href="/retro-portfolio/">
     <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -141,7 +142,7 @@
                 <p id="selected-name" class="nes-text"></p>
                 <p id="selected-quote" class="character-quote"></p>
                 <button class="nes-btn" onclick="resetSelection()">Choose Again</button>
-                <button class="nes-btn is-success" onclick="startGame()">Start Adventure!</button>
+                <button class="nes-btn is-success start-button" onclick="startGame()" style="display: none;">Start Adventure!</button>
             </div>
         </div>
 
