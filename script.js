@@ -570,7 +570,7 @@ function selectCharacter(characterId) {
     createConfetti();
     // Show start button with a delay
     setTimeout(() => {
-        document.querySelector('.start-button').style.display = 'block';
+        document.querySelector('.start-button').style.display = 'inline-block';
     }, 500);
 }
 
