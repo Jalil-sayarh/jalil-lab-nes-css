@@ -568,6 +568,10 @@ function selectCharacter(characterId) {
 
     // Add some celebration effects
     createConfetti();
+    // Show start button with a delay
+    setTimeout(() => {
+        document.querySelector('.start-button').style.display = 'block';
+    }, 500);
 }
 
 function resetSelection() {
